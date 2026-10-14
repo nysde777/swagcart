@@ -1,0 +1,22 @@
+# dependencias
+node_modules/
+
+# usuario y contraseña (nunca subir)
+.env
+.env.*
+
+# grabacion de la compra
+*.zip
+
+# resultados de las pruebas
+resultados/
+
+# logs
+*.log
+npm-debug.log*
+
+# sistema operativo y editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

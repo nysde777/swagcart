@@ -1,0 +1,44 @@
+name: Pruebas
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    env:
+      SWAG_USUARIO: ${{ secrets.SWAG_USUARIO }}
+      SWAG_CLAVE: ${{ secrets.SWAG_CLAVE }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Pruebas
+        run: npm test
+
+      - name: Scrapear empleados
+        if: always()
+        run: npm run scrapear
+
+      - name: Grabar compra
+        if: always()
+        run: npm run grabar
+
+      - name: Subir resultados
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultados
+          path: |
+            resultados/
+            datos/empleados.js
+            grabacion.zip
