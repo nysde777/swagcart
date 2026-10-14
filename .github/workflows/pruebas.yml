@@ -22,6 +22,10 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
+      # Ubuntu bloquea el sandbox de Chrome; esto lo permite sin usar --no-sandbox
+      - name: Permitir el sandbox de Chrome
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
       - name: Pruebas
         run: npm test
 
